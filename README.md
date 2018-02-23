@@ -56,7 +56,7 @@ Sets `char *name` and `size_t name_len` with the buffer and buffer length.
 
 #### `NAPI_ARGV_BUFFER_CAST(type, name, index)`
 
-Get a buffer out buf cast the pointer to the specified type.
+Get a buffer out and cast the pointer to the specified type.
 Note that the type should include the pointer star, i.e.
 
 ``` c
