@@ -1,6 +1,18 @@
 #ifndef NAPI_MACROS
 #define NAPI_MACROS
 
+#define NAPI_INIT() \
+  static void napi_macros_init(napi_env env, napi_value exports); \
+  napi_value napi_macros_init_wrap (napi_env env, napi_value exports) { \
+    napi_macros_init(env, exports); \
+    return exports; \
+  } \
+  NAPI_MODULE(NODE_GYP_MODULE_NAME, napi_macros_init_wrap) \
+  static void napi_macros_init (napi_env env, napi_value exports)
+
+#define NAPI_METHOD(name) \
+  napi_value name (napi_env env, napi_callback_info info)
+
 #define NAPI_UV_THROWS(err, fn) \
   err = fn; \
   if (err < 0) { \

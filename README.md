@@ -23,7 +23,7 @@ to PR more.
 #include <node_api.h>
 #include <napi-macros.h>
 
-napi_value times_two (napi_env env, napi_callback_info info) {
+NAPI_METHOD(times_two) {
   NAPI_ARGV(1)
   NAPI_ARGV_INT32(number, 0)
 
@@ -32,17 +32,42 @@ napi_value times_two (napi_env env, napi_callback_info info) {
   NAPI_RETURN_INT32(number)
 }
 
-napi_value init (napi_env env, napi_value exports) {
+NAPI_INIT(napi_env env, napi_value exports) {
   NAPI_EXPORT_FUNCTION(times_two)
-  return exports;
 }
-
-NAPI_MODULE(NODE_GYP_MODULE_NAME, init)
 ```
 
 Full working example can be found in the [example/](https://github.com/mafintosh/napi-macros/tree/master/example) folder.
 
 ## API
+
+#### `NAPI_INIT()`
+
+Setup init boilerplate. Pass the function body after.
+
+``` c
+static char *my_string = "hello";
+
+NAPI_INIT() {
+  EXPORT_STRING(my_string)
+}
+```
+
+#### `NAPI_METHOD(name)`
+
+Setup method boilerplate. Pass the function body after.
+
+``` c
+NAPI_METHOD(add) {
+  NAPI_ARGV(2)
+  NAPI_ARGV_INT32(a, 0)
+  NAPI_ARGV_INT32(b, 0)
+
+  a = a + b
+
+  NAPI_RETURN_INT32(a)
+}
+```
 
 #### `NAPI_ARGV(n)`
 
