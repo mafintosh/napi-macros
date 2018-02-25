@@ -66,37 +66,52 @@
 #define NAPI_RETURN_STRING(name) \
   NAPI_RETURN_UTF8(name, NAPI_AUTO_LENGTH)
 
+#define NAPI_UTF8(name, size, val) \
+  char name[size]; \
+  size_t name##_len; \
+  if (napi_get_value_string_utf8(env, val, (char *) &name, size, &name##_len) != napi_ok) { \
+    napi_throw_error(env, "EINVAL", "Expected string"); \
+    return NULL; \
+  }
+
+#define NAPI_UINT32(name, val) \
+  uint32_t name; \
+  if (napi_get_value_uint32(env, val, &name) != napi_ok) { \
+    napi_throw_error(env, "EINVAL", "Expected unsigned number"); \
+    return NULL; \
+  }
+
+#define NAPI_INT32(name, val) \
+  int32_t name; \
+  if (napi_get_value_int32(env, val, &name) != napi_ok) { \
+    napi_throw_error(env, "EINVAL", "Expected number"); \
+    return NULL; \
+  }
+
+#define NAPI_BUFFER_CAST(type, name, val) \
+  type name; \
+  size_t name##_len; \
+  napi_get_buffer_info(env, val, (void **) &name, &name##_len);
+
+#define NAPI_BUFFER(name, val) \
+  NAPI_BUFFER_CAST(char *, name, val)
+
 #define NAPI_ARGV(n) \
   napi_value argv[n]; \
   size_t argc = n; \
   napi_get_cb_info(env, info, &argc, argv, NULL, NULL);
 
 #define NAPI_ARGV_UTF8(name, size, i) \
-  char name[size]; \
-  size_t name##_len; \
-  if (napi_get_value_string_utf8(env, argv[i], (char *) &name, size, &name##_len) != napi_ok) { \
-    napi_throw_error(env, "EINVAL", "Expected string"); \
-    return NULL; \
-  }
+  NAPI_UTF8(name, size, argv[i])
 
 #define NAPI_ARGV_UINT32(name, i) \
-  uint32_t name; \
-  if (napi_get_value_uint32(env, argv[i], &name) != napi_ok) { \
-    napi_throw_error(env, "EINVAL", "Expected unsigned number"); \
-    return NULL; \
-  }
+  NAPI_UINT32(name, argv[i])
 
 #define NAPI_ARGV_INT32(name, i) \
-  int32_t name; \
-  if (napi_get_value_int32(env, argv[i], &name) != napi_ok) { \
-    napi_throw_error(env, "EINVAL", "Expected number"); \
-    return NULL; \
-  }
+  NAPI_INT32(name, argv[i])
 
 #define NAPI_ARGV_BUFFER_CAST(type, name, i) \
-  type name; \
-  size_t name##_len; \
-  napi_get_buffer_info(env, argv[i], (void **) &name, &name##_len);
+  NAPI_BUFFER_CAST(type, name, argv[i])
 
 #define NAPI_ARGV_BUFFER(name, i) \
   NAPI_ARGV_BUFFER_CAST(char *, name, i)
