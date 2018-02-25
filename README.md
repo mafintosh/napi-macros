@@ -108,6 +108,22 @@ Get an argument as a utf8 string.
 
 Will throw if argument is not the right type.
 
+#### `NAPI_BUFFER_CAST(type, name, var)`
+
+Same as `NAPI_ARGV_BUFFER_CAST` but takes a generic `napi_value` variable instead of an argv index.
+
+#### `NAPI_BUFFER(name, var)`
+
+Same as `NAPI_ARGV_BUFFER` but takes a generic `napi_value` variable instead of an argv index.
+
+#### `NAPI_UINT32(name, var)`
+
+Same as `NAPI_ARGV_UINT32` but takes a generic `napi_value` variable instead of an argv index.
+
+#### `NAPI_INT32(name, var)`
+
+Same as `NAPI_ARGV_INT32` but takes a generic `napi_value` variable instead of an argv index.
+
 #### `NAPI_EXPORT_FUNCTION(fn)`
 
 Will export a function in the Init method. Expects the env and `exports` to be in scope.
@@ -136,6 +152,20 @@ The name of the exported string is the same name as the c variable.
 
 Export a null terminated string.
 The name of the exported string is the same name as the c variable.
+
+#### `NAPI_FOR_EACH(array, element)`
+
+Iterate over an array. `array` should be a `napi_value` containing a javascript array
+and `element` is the variable name an element will be exposed as. Expects the loop body
+to be passed after.
+
+``` c
+napi_value buffers = argv[0] // first argument is a js array
+NAPI_FOR_EACH(buffers, buffer) {
+  NAPI_BUFFER(cbuf, buffer)
+  printf("cbuf is now a char * pointer: %s\n", cbuf);
+}
+```
 
 #### `NAPI_RETURN_UINT32(name)`
 

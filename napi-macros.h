@@ -96,6 +96,12 @@
 #define NAPI_BUFFER(name, val) \
   NAPI_BUFFER_CAST(char *, name, val)
 
+#define NAPI_FOR_EACH(arr, element) \
+  uint32_t arr##_len; \
+  napi_get_array_length(env, arr, &arr##_len); \
+  napi_value element; \
+  for (uint32_t i = 0; i < arr##_len && napi_get_element(env, arr, i, &element) == napi_ok; i++) 
+
 #define NAPI_ARGV(n) \
   napi_value argv[n]; \
   size_t argc = n; \
