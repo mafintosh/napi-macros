@@ -61,7 +61,7 @@ Setup method boilerplate. Pass the function body after.
 NAPI_METHOD(add) {
   NAPI_ARGV(2)
   NAPI_ARGV_INT32(a, 0)
-  NAPI_ARGV_INT32(b, 0)
+  NAPI_ARGV_INT32(b, 1)
 
   a = a + b
 
