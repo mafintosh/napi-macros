@@ -20,9 +20,36 @@
     return NULL; \
   }
 
+#define NAPI_EXPORT_ALIGNMENTOF(name) \
+  napi_value name##_alignmentof; \
+  { \
+    struct tmp { \
+      char a; \
+      name b; \
+    }; \
+    napi_create_uint32(env, sizeof(struct tmp) - sizeof(name), &name##_alignmentof); \
+    napi_set_named_property(env, exports, "alignmentof_" #name, name##_alignmentof); \
+  }
+
+#define NAPI_EXPORT_ALIGNMENTOF_STRUCT(name) \
+  napi_value name##_alignmentof; \
+  { \
+    struct tmp { \
+      char a; \
+      struct name b; \
+    }; \
+    napi_create_uint32(env, sizeof(struct tmp) - sizeof(struct name), &name##_alignmentof); \
+    napi_set_named_property(env, exports, "alignmentof_" #name, name##_alignmentof); \
+  }
+
 #define NAPI_EXPORT_SIZEOF(name) \
   napi_value name##_sizeof; \
   napi_create_uint32(env, sizeof(name), &name##_sizeof); \
+  napi_set_named_property(env, exports, "sizeof_" #name, name##_sizeof);
+
+#define NAPI_EXPORT_SIZEOF_STRUCT(name) \
+  napi_value name##_sizeof; \
+  napi_create_uint32(env, sizeof(struct name), &name##_sizeof); \
   napi_set_named_property(env, exports, "sizeof_" #name, name##_sizeof);
 
 #define NAPI_EXPORT_UINT32(name) \

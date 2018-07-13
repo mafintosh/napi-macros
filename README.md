@@ -153,6 +153,26 @@ The name of the exported string is the same name as the c variable.
 Export a null terminated string.
 The name of the exported string is the same name as the c variable.
 
+#### `NAPI_EXPORT_SIZEOF(type)`
+
+Exports `sizeof(type)`.
+The name of the exported number is the same name as the c variable.
+
+#### `NAPI_EXPORT_SIZEOF_STRUCT(structName)`
+
+Exports `sizeof(struct structName)`.
+The name of the exported number is the same name as the c variable.
+
+#### `NAPI_EXPORT_ALIGNMENTOF(type)`
+
+Exports the byte alignment of `type`.
+The name of the exported number is the same name as the c variable.
+
+#### `NAPI_EXPORT_ALIGNMENTOF_STRUCT(structName)`
+
+Exports the byte alignment of `struct structName`.
+The name of the exported number is the same name as the c variable.
+
 #### `NAPI_FOR_EACH(array, element)`
 
 Iterate over an array. `array` should be a `napi_value` containing a javascript array
