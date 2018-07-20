@@ -32,7 +32,7 @@ NAPI_METHOD(times_two) {
   NAPI_RETURN_INT32(number)
 }
 
-NAPI_INIT(napi_env env, napi_value exports) {
+NAPI_INIT() {
   NAPI_EXPORT_FUNCTION(times_two)
 }
 ```
