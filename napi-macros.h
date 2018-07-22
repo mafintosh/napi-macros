@@ -87,7 +87,7 @@
 
 #define NAPI_RETURN_UTF8(name, len) \
   napi_value return_utf8; \
-  napi_create_string_utf8(env, name, len, &return_uint32); \
+  napi_create_string_utf8(env, name, len, &return_utf8); \
   return return_utf8;
 
 #define NAPI_RETURN_STRING(name) \
