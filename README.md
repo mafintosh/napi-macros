@@ -203,6 +203,35 @@ Return a utf8 string. `len` should be the length of the string.
 
 Return a null terminated string.
 
+#### `NAPI_STATUS_THROWS(call)`
+
+Checks the return status of any `napi_*` function returning a `napi_status` type. This simplifies using a `napi_status` variable and comparing the result with `napi_ok`. It's used internally but can be used stand alone as well.
+
+```c
+NAPI_STATUS_THROWS(
+  napi_create_threadsafe_function(
+    NULL,
+    callback,
+    0,
+    async_resource_name,
+    0,
+    3,
+    0,
+    my_finalize,
+    NULL,
+    my_callback,
+    &threadsafe_function
+  )
+);
+```
+
+Above example will fail because the first `env` parameter is `NULL` and throw the following error:
+
+```
+Error: napi_create_threadsafe_function(NULL, callback, 0, async_resource_name, 0, 3, 0, my_finalize, \
+NULL, my_callback, &threadsafe_function) failed!
+```
+
 #### `NAPI_UV_THROWS(err, fn)`
 
 Checks if a libuv call fails and if so, throws an error.
