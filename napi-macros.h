@@ -59,7 +59,7 @@
 
 #define NAPI_EXPORT_INT32(name) \
   napi_value name##_int32; \
-  napi_create_uint32(env, name, &name##_int32); \
+  napi_create_int32(env, name, &name##_int32); \
   napi_set_named_property(env, exports, #name, name##_int32);
 
 #define NAPI_EXPORT_FUNCTION(name) \
@@ -87,7 +87,7 @@
 
 #define NAPI_RETURN_UTF8(name, len) \
   napi_value return_utf8; \
-  napi_create_string_utf8(env, name, len, &return_uint32); \
+  napi_create_string_utf8(env, name, len, &return_utf8); \
   return return_utf8;
 
 #define NAPI_RETURN_STRING(name) \
@@ -127,7 +127,7 @@
   uint32_t arr##_len; \
   napi_get_array_length(env, arr, &arr##_len); \
   napi_value element; \
-  for (uint32_t i = 0; i < arr##_len && napi_get_element(env, arr, i, &element) == napi_ok; i++) 
+  for (uint32_t i = 0; i < arr##_len && napi_get_element(env, arr, i, &element) == napi_ok; i++)
 
 #define NAPI_ARGV(n) \
   napi_value argv[n]; \
