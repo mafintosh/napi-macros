@@ -1,6 +1,6 @@
 {
   "name": "napi-macros",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Set of utility macros to make writing N-API modules a little easier.",
   "main": "index.js",
   "dependencies": {},
