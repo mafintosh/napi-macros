@@ -241,6 +241,11 @@ int err;
 NAPI_UV_THROWS(err, uv_ip4_addr((char *) &ip, port, &addr))
 ```
 
+#### `NAPI_MAKE_CALLBACK(env, async_ctx, ctx, func, argc, argv, result)`
+
+Same as `napi_make_callback` except it checks if the JS function throw an exception
+and triggers a `process.on('uncaughtException')` if so.
+
 ## License
 
 MIT
