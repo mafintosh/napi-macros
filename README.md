@@ -124,6 +124,10 @@ Same as `NAPI_ARGV_BUFFER_CAST` but takes a generic `napi_value` variable instea
 
 Same as `NAPI_ARGV_BUFFER` but takes a generic `napi_value` variable instead of an argv index.
 
+#### `NAPI_UTF8(name, size, var)`
+
+Same as `NAPI_ARGV_UTF8` but takes a generic `napi_value` variable instead of an argv index.
+
 #### `NAPI_UTF8_MALLOC(name, var)`
 
 Same as `NAPI_ARGV_UTF8_MALLOC` but takes a generic `napi_value` variable instead of an argv index.
