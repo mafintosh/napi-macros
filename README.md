@@ -108,6 +108,14 @@ Get an argument as a utf8 string.
 
 Will throw if argument is not the right type.
 
+#### `NAPI_ARGV_UTF8_MALLOC(name, index)`
+
+Get an argument as a utf8 string.
+
+`name` will be a `char*`.
+
+Like `NAPI_ARGV_UTF8()` but allocates `name` on the heap using `malloc()`, which should be `free()`'d after usage.
+
 #### `NAPI_BUFFER_CAST(type, name, var)`
 
 Same as `NAPI_ARGV_BUFFER_CAST` but takes a generic `napi_value` variable instead of an argv index.
@@ -115,6 +123,14 @@ Same as `NAPI_ARGV_BUFFER_CAST` but takes a generic `napi_value` variable instea
 #### `NAPI_BUFFER(name, var)`
 
 Same as `NAPI_ARGV_BUFFER` but takes a generic `napi_value` variable instead of an argv index.
+
+#### `NAPI_UTF8(name, size, var)`
+
+Same as `NAPI_ARGV_UTF8` but takes a generic `napi_value` variable instead of an argv index.
+
+#### `NAPI_UTF8_MALLOC(name, var)`
+
+Same as `NAPI_ARGV_UTF8_MALLOC` but takes a generic `napi_value` variable instead of an argv index.
 
 #### `NAPI_UINT32(name, var)`
 
