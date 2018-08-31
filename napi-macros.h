@@ -37,7 +37,9 @@
     napi_value name##_offsetof; \
     type tmp; \
     void *ptr = &(tmp.name); \
-    NAPI_STATUS_THROWS(napi_create_uint32(env, (uint32_t) (ptr - (void *) &tmp), &name##_offsetof)) \
+    void *ptr_base = &tmp; \
+    int offset = (char *) ptr - (char *) ptr_base; \
+    NAPI_STATUS_THROWS(napi_create_uint32(env, offset, &name##_offsetof)) \
     NAPI_STATUS_THROWS(napi_set_named_property(env, exports, "offsetof_" #type "_" #name, name##_offsetof)) \
   }
 
@@ -46,7 +48,9 @@
     napi_value name##_offsetof; \
     struct type tmp; \
     void *ptr = &(tmp.name); \
-    NAPI_STATUS_THROWS(napi_create_uint32(env, (uint32_t) (ptr - (void *) &tmp), &name##_offsetof)) \
+    void *ptr_base = &tmp; \
+    int offset = (char *) ptr - (char *) ptr_base; \
+    NAPI_STATUS_THROWS(napi_create_uint32(env, offset, &name##_offsetof)) \
     NAPI_STATUS_THROWS(napi_set_named_property(env, exports, "offsetof_struct_" #type "_" #name, name##_offsetof)) \
   }
 
