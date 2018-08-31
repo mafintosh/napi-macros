@@ -32,6 +32,25 @@
     return NULL; \
   }
 
+#define NAPI_EXPORT_OFFSETOF(type, name) \
+  { \
+    napi_value offsetof; \
+    type tmp; \
+    void *ptr = &(tmp.name); \
+    NAPI_STATUS_THROWS(napi_create_uint32(env, (uint32_t) (ptr - (void *) &tmp), &offsetof)) \
+    NAPI_STATUS_THROWS(napi_set_named_property(env, exports, "offsetof_" #type "_" #name, offsetof)) \
+  }
+
+#define NAPI_EXPORT_OFFSETOF_STRUCT(type, name) \
+  { \
+    napi_value offsetof; \
+    struct type tmp; \
+    void *ptr = &(tmp.name); \
+    NAPI_STATUS_THROWS(napi_create_uint32(env, (uint32_t) (ptr - (void *) &tmp), &offsetof)) \
+    NAPI_STATUS_THROWS(napi_set_named_property(env, exports, "offsetof_struct_" #type "_" #name, offsetof)) \
+  }
+
+
 #define NAPI_EXPORT_ALIGNMENTOF(name) \
   napi_value name##_alignmentof; \
   { \

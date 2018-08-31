@@ -189,6 +189,16 @@ The name of the exported number is the same name as the c variable.
 Exports the byte alignment of `struct structName`.
 The name of the exported number is the same name as the c variable.
 
+#### `NAPI_EXPORT_OFFSETOF(type, name)`
+
+Exports the byte offset of `name` within `type`.
+The name of the exported number is the same name as the c variables.
+
+#### `NAPI_EXPORT_OFFSETOF_STRUCT(structName, name)`
+
+Exports the byte offset of `name` within `struct structName`.
+The name of the exported number is the same name as the c variables.
+
 #### `NAPI_FOR_EACH(array, element)`
 
 Iterate over an array. `array` should be a `napi_value` containing a javascript array
