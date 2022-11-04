@@ -10,6 +10,17 @@
   NAPI_MODULE(NODE_GYP_MODULE_NAME, napi_macros_init_wrap) \
   static void napi_macros_init (napi_env env, napi_value exports)
 
+#define NAPI_TEST_GC(env) \
+  { \
+    napi_handle_scope scope; \
+    napi_open_handle_scope(env, &scope); \
+    napi_value s; \
+    napi_value r; \
+    napi_create_string_utf8(env, "try { global.gc() } catch {}", NAPI_AUTO_LENGTH, &s); \
+    napi_run_script(env, s, &r); \
+    napi_close_handle_scope(env, scope); \
+  }
+
 #define NAPI_MAKE_CALLBACK(env, nil, ctx, cb, n, argv, res) \
   if (napi_make_callback(env, nil, ctx, cb, n, argv, res) == napi_pending_exception) { \
     napi_value fatal_exception; \
