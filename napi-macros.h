@@ -3,7 +3,7 @@
 
 #define NAPI_INIT() \
   static void napi_macros_init(napi_env env, napi_value exports); \
-  napi_value napi_macros_init_wrap (napi_env env, napi_value exports) { \
+  static napi_value napi_macros_init_wrap (napi_env env, napi_value exports) { \
     napi_macros_init(env, exports); \
     return exports; \
   } \
