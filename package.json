@@ -9,6 +9,10 @@
     "type": "git",
     "url": "https://github.com/mafintosh/napi-macros.git"
   },
+  "files": [
+    "napi-macros.h",
+    "index.js"
+  ],
   "author": "Mathias Buus (@mafintosh)",
   "license": "MIT",
   "bugs": {
