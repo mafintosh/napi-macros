@@ -21,6 +21,32 @@
     napi_close_handle_scope(env, scope); \
   }
 
+#define NAPI_ERROR_MAP_ITER(NAME, DESC) { \
+  napi_create_array(env, &entry); \
+  napi_create_array(env, &val); \
+  napi_value name; \
+  napi_create_string_utf8(env, #NAME, NAPI_AUTO_LENGTH, &name); \
+  napi_set_element(env, val, 0, name); \
+  napi_value desc; \
+  napi_create_string_utf8(env, DESC, NAPI_AUTO_LENGTH, &desc); \
+  napi_set_element(env, val, 1, desc); \
+  napi_create_int32(env, UV_ ## NAME, &key); \
+  napi_set_element(env, entry, 0, key); \
+  napi_set_element(env, entry, 1, val); \
+  napi_set_element(env, arr, i++, entry); \
+}
+
+#define NAPI_RETURN_ERROR_MAP() { \
+  napi_value arr; \
+  napi_value key; \
+  napi_value val; \
+  napi_value entry; \
+  napi_create_array(env, &arr); \
+  int i = 0; \
+  UV_ERRNO_MAP(NAPI_ERROR_MAP_ITER) \
+  return arr; \
+}
+
 #define NAPI_MAKE_CALLBACK(env, nil, ctx, cb, n, argv, res) \
   if (napi_make_callback(env, nil, ctx, cb, n, argv, res) == napi_pending_exception) { \
     napi_value fatal_exception; \
