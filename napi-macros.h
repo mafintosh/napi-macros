@@ -21,7 +21,7 @@
     napi_close_handle_scope(env, scope); \
   }
 
-#define NAPI_ERROR_MAP_ITER(NAME, DESC) { \
+#define NAPI_UV_ERROR_MAP_ITER(NAME, DESC) { \
   napi_create_array(env, &entry); \
   napi_create_array(env, &val); \
   napi_value name; \
@@ -34,17 +34,6 @@
   napi_set_element(env, entry, 0, key); \
   napi_set_element(env, entry, 1, val); \
   napi_set_element(env, arr, i++, entry); \
-}
-
-#define NAPI_RETURN_ERROR_MAP() { \
-  napi_value arr; \
-  napi_value key; \
-  napi_value val; \
-  napi_value entry; \
-  napi_create_array(env, &arr); \
-  int i = 0; \
-  UV_ERRNO_MAP(NAPI_ERROR_MAP_ITER) \
-  return arr; \
 }
 
 #define NAPI_MAKE_CALLBACK(env, nil, ctx, cb, n, argv, res) \
@@ -119,6 +108,18 @@
     }; \
     NAPI_STATUS_THROWS_VOID(napi_create_uint32(env, sizeof(struct tmp) - sizeof(struct name), &name##_alignmentof)) \
     NAPI_STATUS_THROWS_VOID(napi_set_named_property(env, exports, "alignmentof_" #name, name##_alignmentof)) \
+  }
+
+#define NAPI_EXPORT_UV_ERROR_MAP() \
+  { \
+    napi_value arr; \
+    napi_value key; \
+    napi_value val; \
+    napi_value entry; \
+    napi_create_array(env, &arr); \
+    int i = 0; \
+    UV_ERRNO_MAP(NAPI_UV_ERROR_MAP_ITER) \
+    NAPI_STATUS_THROWS_VOID(napi_set_named_property(env, exports, "uv_error_map", arr)) \
   }
 
 #define NAPI_EXPORT_SIZEOF(name) \
